@@ -17,3 +17,11 @@ resource "azurerm_resource_group" "platform_rg" {
   name     = "rg-platform"
   location = "West Europe"
 }
+
+resource "azurerm_container_registry" "platform_acr" {
+  name                     = "acr-platform"
+  resource_group_name      = azurerm_resource_group.platform_rg.name
+  location                 = azurerm_resource_group.platform_rg.location
+  sku                      = "Basic"
+  admin_enabled            = false
+}
