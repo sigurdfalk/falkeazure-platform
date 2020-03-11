@@ -25,7 +25,7 @@ module "container_registry" {
 }
 
 module "app_service" {
-  source = "./modules/app-service"
-  name = "falkeappservice"
+  source              = "./modules/app-service"
+  name                = "falkeappservice"
   resource_group_name = azurerm_resource_group.platform_rg.name
 }
