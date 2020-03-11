@@ -42,6 +42,9 @@ jobs:
           tf_actions_version: 0.12.20
           tf_actions_subcommand: 'plan'
           tf_actions_working_dir: '.'
+          args: |
+            -var="registry_user_name=${{ secrets.REGISTRY_USERNAME }}"
+            -var="registry_password=${{ secrets.REGISTRY_PASSWORD }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}

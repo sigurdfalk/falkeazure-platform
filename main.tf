@@ -28,4 +28,6 @@ module "app_service" {
   source              = "./modules/app-service"
   name                = "falkeappservice"
   resource_group_name = azurerm_resource_group.platform_rg.name
+  registry_user_name  = var.registry_user_name
+  registry_password   = var.registry_password
 }
