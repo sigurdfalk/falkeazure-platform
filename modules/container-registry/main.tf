@@ -7,6 +7,6 @@ resource "azurerm_container_registry" "platform_acr" {
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   sku                 = "Basic"
-  admin_enabled       = false
+  admin_enabled       = true
 }
 
