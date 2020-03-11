@@ -8,7 +8,7 @@ variable "resource_group_name" {
   description = "The name of an existing resource group for the App Service."
 }
 
-variable "registry_user_name" {
+variable "registry_username" {
   type = string
 }
 

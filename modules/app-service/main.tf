@@ -10,8 +10,8 @@ resource "azurerm_app_service_plan" "main" {
   reserved            = true
 
   sku {
-    size = "F1"
-    tier = "Free"
+    size = "B1"
+    tier = "Basic"
   }
 }
 
@@ -23,7 +23,7 @@ resource "azurerm_app_service" "main" {
 
   site_config {
     app_command_line = ""
-    linux_fx_version = "DOCKER|falkeazure:latest"
+    linux_fx_version = "DOCKER|falkeregistry.azurecr.io/falkeazure:0f5b76273e820230bd106c9d230ee830f62d04f7"
     always_on        = true
   }
 
@@ -31,7 +31,7 @@ resource "azurerm_app_service" "main" {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
 
     DOCKER_REGISTRY_SERVER_URL      = "https://falkeregistry.azurecr.io"
-    DOCKER_REGISTRY_SERVER_USERNAME = var.registry_user_name
+    DOCKER_REGISTRY_SERVER_USERNAME = var.registry_username
     DOCKER_REGISTRY_SERVER_PASSWORD = var.registry_password
 
     "SPRING_PROFILES_ACTIVE" = "prod"
