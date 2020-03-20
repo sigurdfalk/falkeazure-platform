@@ -24,6 +24,13 @@ module "container_registry" {
   resource_group_name = azurerm_resource_group.platform_rg.name
 }
 
+module "acr_service_principal" {
+  source = "./modules/service-principal"
+  name   = "falkeregistryprincipal"
+  role   = "AcrPush"
+  scopes = [module.container_registry.id]
+}
+
 module "app_service" {
   source              = "./modules/app-service"
   name                = "falkeappservice"
