@@ -18,7 +18,7 @@ resource "azurerm_resource_group" "platform_rg" {
   location = "West Europe"
 }
 
-module "container_registry" {
+module "acr" {
   source              = "./modules/container-registry"
   name                = "falkeregistry"
   resource_group_name = azurerm_resource_group.platform_rg.name
@@ -28,13 +28,30 @@ module "acr_service_principal" {
   source = "./modules/service-principal"
   name   = "falkeregistryprincipal"
   role   = "AcrPush"
-  scopes = [module.container_registry.id]
+  scopes = [module.acr.id]
+}
+
+module "kv_service_principal" {
+  source = "./modules/service-principal"
+  name   = "falkekeyvaultprincipal"
+}
+
+module "kv" {
+  source                      = "./modules/key-vault"
+  name                        = "falkekeyvault"
+  resource_group_name         = azurerm_resource_group.platform_rg.name
+  service_principal_object_id = module.kv_service_principal.object_id
+
+  secrets = {
+    "acrSpClientId"     = module.acr_service_principal.client_id
+    "acrSpClientSecret" = module.acr_service_principal.client_secret
+  }
 }
 
 module "app_service" {
   source              = "./modules/app-service"
   name                = "falkeappservice"
   resource_group_name = azurerm_resource_group.platform_rg.name
-  registry_username   = module.container_registry.repository_username
-  registry_password   = module.container_registry.repository_password
+  registry_username   = module.acr_service_principal.client_id
+  registry_password   = module.acr_service_principal.client_secret
 }

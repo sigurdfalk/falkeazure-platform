@@ -24,12 +24,13 @@ resource "azuread_service_principal_password" "main" {
 }
 
 data "azurerm_role_definition" "main" {
-  name = var.role
+  count = var.role != "" ? 1 : 0
+  name  = var.role
 }
 
 resource "azurerm_role_assignment" "main" {
-  count              = length(local.scopes)
+  count              = var.role != "" ? length(local.scopes) : 0
   scope              = local.scopes[count.index]
-  role_definition_id = data.azurerm_role_definition.main.id
+  role_definition_id = data.azurerm_role_definition.main[0].id
   principal_id       = azuread_service_principal.main.id
 }
