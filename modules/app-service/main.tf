@@ -23,7 +23,7 @@ resource "azurerm_app_service" "main" {
 
   site_config {
     app_command_line = ""
-    linux_fx_version = "DOCKER|falkeregistry.azurecr.io/falkeazure:0f5b76273e820230bd106c9d230ee830f62d04f7"
+    linux_fx_version = "DOCKER|falkeregistry.azurecr.io/falkeazure:latest"
     always_on        = true
   }
 

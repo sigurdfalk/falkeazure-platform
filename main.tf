@@ -34,6 +34,8 @@ module "acr_service_principal" {
 module "kv_service_principal" {
   source = "./modules/service-principal"
   name   = "falkekeyvaultprincipal"
+  role   = "Contributor"
+  scopes = [azurerm_resource_group.platform_rg.id]
 }
 
 module "kv" {
